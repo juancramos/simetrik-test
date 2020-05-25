@@ -1,7 +1,17 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { GlobalState } from '../store';
 
-function HomePage() {
-  return (<div>Welcome to Next.js!</div>);
-}
+const Index = () => {
+  const { columnNames } = useSelector((state: GlobalState) => state.dndListReducer);
 
-export default HomePage;
+  return (
+    <>
+      {columnNames.map(colName => (
+        <p>{colName}</p>
+      ))}
+    </>
+  );
+};
+
+export default Index;

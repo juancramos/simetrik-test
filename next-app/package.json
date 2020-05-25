@@ -4,9 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "client:build": "NODE_ENV=production next build",
+    "client:export": "NODE_ENV=production next export",
+    "client:start": "NODE_ENV=production next start",
     "dev": "next",
-    "build": "next build",
-    "start": "next start",
     "tslint": "tslint -p . -c tslint.json"
   },
   "prettier": {
@@ -24,8 +25,11 @@
   "license": "ISC",
   "dependencies": {
     "next": "^9.4.2",
+    "next-redux-wrapper": "^6.0.0",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1",
+    "react-redux": "^7.2.0",
+    "redux": "^4.0.5"
   },
   "devDependencies": {
     "@types/node": "^14.0.5",

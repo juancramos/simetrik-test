@@ -1,9 +1,16 @@
 {
-    "extends": [
-        "tslint-config-airbnb",
-        "tslint-react-hooks"
-    ],
     "rules": {
+        "eofline": true,
+        "semicolon": true,
+        "whitespace": true,
+        "quotemark": [
+            true,
+            "single"
+        ],
+        "no-empty": [
+            true,
+            "allow-empty-functions"
+        ],
         "import-name": false,
         "align": false,
         "function-name": [
@@ -25,5 +32,9 @@
             ]
         },
         "react-hooks-nesting": true
-    }
+    },
+    "extends": [
+        "tslint-config-airbnb",
+        "tslint-react-hooks"
+    ]
 }
