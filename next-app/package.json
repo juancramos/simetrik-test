@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "client:build": "NODE_ENV=production next build",
-    "client:export": "NODE_ENV=production next export",
-    "client:start": "NODE_ENV=production next start",
+    "build": "NODE_ENV=production next build",
+    "export": "NODE_ENV=production next export",
+    "start": "NODE_ENV=production next start",
     "dev": "next",
     "tslint": "tslint -p . -c tslint.json"
   },
@@ -24,17 +24,22 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.28",
+    "@fortawesome/free-solid-svg-icons": "^5.13.0",
+    "@fortawesome/react-fontawesome": "^0.1.9",
     "next": "^9.4.2",
     "next-redux-wrapper": "^6.0.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.0",
-    "redux": "^4.0.5"
+    "redux": "^4.0.5",
+    "styled-components": "^5.1.0"
   },
   "devDependencies": {
     "@types/node": "^14.0.5",
     "@types/react": "^16.9.35",
     "babel-plugin-module-resolver": "^4.0.0",
+    "babel-plugin-styled-components": "^1.10.7",
     "husky": "^4.2.5",
     "prettier": "^2.0.5",
     "tslint": "^6.1.2",

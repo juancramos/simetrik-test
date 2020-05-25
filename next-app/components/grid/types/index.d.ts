@@ -1,0 +1,1 @@
+export type { ColumnProps } from './columnProps';

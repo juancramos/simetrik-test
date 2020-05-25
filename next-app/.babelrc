@@ -1,15 +1,30 @@
 {
-    "presets": [["next/babel"]],
-    "plugins": [
-      [
-        "module-resolver",
-        {
-          "root": ["./"],
-          "alias": {
-            "@components": "./components"
-          }
-        }
-      ]
+  "presets": [
+    [
+      "next/babel"
     ]
-  }
-  
+  ],
+  "plugins": [
+    [
+      "module-resolver",
+      {
+        "root": [
+          "./"
+        ],
+        "alias": {
+          "@components": "./components",
+          "@store": "./store",
+          "@shared": "./shared"
+        }
+      }
+    ],
+    [
+      "styled-components",
+      {
+        "ssr": true,
+        "displayName": true,
+        "preprocess": false
+      }
+    ]
+  ]
+}

@@ -1,5 +1,5 @@
 import { MakeStore, createWrapper, Context } from 'next-redux-wrapper';
-import store, { GlobalState } from '../store';
+import store, { GlobalState } from '@store/index';
 
 function MyApp({ Component, pageProps }) {
   return (<Component {...pageProps} />);
