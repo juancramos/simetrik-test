@@ -21,8 +21,13 @@ const HeaderComponent = () => {
   const pathName = router && router.pathname;
   const [keys] = useState<HeaderKeysProps>([
     {
-      refs: [{ to: constants.LIST_URL, content: 'Lista', isExternal: false }],
-      name: 'lista',
+      refs: [{ to: constants.LIST_URL, content: 'List', isExternal: false }],
+      name: 'list',
+      title: '',
+    },
+    {
+      refs: [{ to: constants.CHART_URL, content: 'Chart', isExternal: false }],
+      name: 'chart',
       title: '',
     },
   ]);
