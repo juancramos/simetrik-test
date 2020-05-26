@@ -7,4 +7,8 @@ interface Select extends Action {
   columns: string[];
 }
 
-export type selectedOrderAction = Select;
+interface DeleteAll extends Action {
+  type: SELECTED_ORDER_ACTIONS.DELETE_ALL;
+}
+
+export type selectedOrderAction = Select | DeleteAll;

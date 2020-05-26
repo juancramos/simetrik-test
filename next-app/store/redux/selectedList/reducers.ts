@@ -13,6 +13,8 @@ const selectedListReducer = (state = initialState,
       const newNames = selected ? state.selectedNames.filter((elem: string) =>
         elem !== action.columnName) : [...state.selectedNames, action.columnName];
       return { ...state, selectedNames: newNames };
+    case SELECTED_LIST_ACTIONS.DELETE_ALL:
+      return { ...state, selectedNames: [] };
     default:
       return { ...state };
   }

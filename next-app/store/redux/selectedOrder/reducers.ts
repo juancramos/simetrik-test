@@ -13,6 +13,8 @@ const selectedOrderReducer = (state = initialState,
         ...state, selectedOrder:
           action.columns ? action.columns : [],
       };
+    case SELECTED_ORDER_ACTIONS.DELETE_ALL:
+      return { ...state, selectedOrder: [] };
     default:
       return { ...state };
   }

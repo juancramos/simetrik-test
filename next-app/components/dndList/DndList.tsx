@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSort } from '@fortawesome/free-solid-svg-icons';
 import { CardContainer } from '@components/card/card.styled';
@@ -7,13 +7,10 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { Gap } from '@components/gap/Gap';
 import { ItemsContainer, ItemContainer } from './compoenents/dndList.styled';
 import { SELECTED_ORDER_ACTIONS } from '@store/redux/selectedOrder/types';
-import { GlobalState } from '@store/index';
 
-const DndList = ({ selectedNames }:
-  { selectedNames: string[] }) => {
+const DndList = ({ selectedNames, selectedOrder }:
+  { selectedNames: string[], selectedOrder: string[] }) => {
   const [stateNames, setStateNames] = useState<string[]>([]);
-  const { selectedOrder } = useSelector((state: GlobalState) =>
-    state.selectedOrderReducer);
 
   const dispatch = useDispatch();
 
