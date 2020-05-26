@@ -1,9 +1,9 @@
 import { createStore } from 'redux';
 import rootReducer from './redux';
-import { DndListState } from './redux/dndList/types';
+import { SearchListState } from './redux/searchList/types';
 
 export interface GlobalState {
-  dndListReducer: DndListState;
+  searchListReducer: SearchListState;
 }
 
 const store = createStore(rootReducer);

@@ -1,5 +1,5 @@
-import { DND_LIST_ACTIONS, DndListState } from './types';
-import { DndAction } from './actions';
+import { SEARCH_LIST_ACTIONS, SearchListState } from './types';
+import { SearchListAction } from './actions';
 
 const initialState = {
   columnNames: [
@@ -8,11 +8,11 @@ const initialState = {
   ],
 };
 
-const dndListReducer = (state = initialState, action: DndAction): DndListState => {
+const searchListReducer = (state = initialState, action: SearchListAction): SearchListState => {
   switch (action.type) {
-    case DND_LIST_ACTIONS.INSERT:
+    case SEARCH_LIST_ACTIONS.INSERT:
       return { ...state, columnNames: [...state.columnNames, action.columnName] };
-    case DND_LIST_ACTIONS.DELETE:
+    case SEARCH_LIST_ACTIONS.DELETE:
       const cols = state.columnNames.filter((name: string) =>
         name !== action.columnName);
       return { ...state, columnNames: [...cols] };
@@ -21,4 +21,4 @@ const dndListReducer = (state = initialState, action: DndAction): DndListState =
   }
 };
 
-export default dndListReducer;
+export default searchListReducer;

@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import dndListReducer from './dndList/reducers';
+import searchListReducer from './searchList/reducers';
 
 const rootReducer = combineReducers({
-  dndListReducer,
+  searchListReducer,
 });
 
 export default rootReducer;

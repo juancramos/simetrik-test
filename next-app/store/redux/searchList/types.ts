@@ -1,9 +1,9 @@
 // Action Types
-export enum DND_LIST_ACTIONS {
+export enum SEARCH_LIST_ACTIONS {
   INSERT = 'INSERT',
   DELETE = 'DELETE',
 }
 
-export interface DndListState {
+export interface SearchListState {
   columnNames: string[];
 }

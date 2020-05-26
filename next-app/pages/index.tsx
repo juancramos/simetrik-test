@@ -8,7 +8,7 @@ import SearchList from '@components/searchList/SearchList';
 
 const Index = () => {
   const { columnNames } = useSelector((state: GlobalState) =>
-    state.dndListReducer);
+    state.searchListReducer);
 
   return (
     <Layout helmetTags={<title>List</title>}>
@@ -20,6 +20,16 @@ const Index = () => {
           <SearchList columnNames={columnNames} />
         </Column>
         <Column size={2}>
+          <Row>
+            <Column size={1}>
+
+            </Column>
+          </Row>
+          <Row>
+            <Column size={1}>
+              <SearchList columnNames={columnNames} />
+            </Column>
+          </Row>
         </Column>
         <Column size={1}>
         </Column>
