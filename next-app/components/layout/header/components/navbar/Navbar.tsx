@@ -56,9 +56,7 @@ export const Navbar: FunctionComponent<NavbarProps> = (props: NavbarProps) => {
           <NavItemContainer key='/' selected={selectedId === '/'}
             onClick={(event: SyntheticEvent) => handleClick(event, '/')}>
             <section>
-              <a href='/'>
-                Inicio
-                            </a>
+              <a href='/'>Inicio</a>
             </section>
           </NavItemContainer>
           {composeComponent(NavItemContainer, children, 'left')}

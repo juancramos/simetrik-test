@@ -1,11 +1,21 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSort } from '@fortawesome/free-solid-svg-icons';
 import { CardContainer } from '@components/card/card.styled';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { Gap } from '@components/gap/Gap';
+import { ItemsContainer, ItemContainer } from './compoenents/dndList.styled';
+import { SELECTED_ORDER_ACTIONS } from '@store/redux/selectedOrder/types';
+import { GlobalState } from '@store/index';
 
 const DndList = ({ selectedNames }:
   { selectedNames: string[] }) => {
   const [stateNames, setStateNames] = useState<string[]>([]);
+  const { selectedOrder } = useSelector((state: GlobalState) =>
+    state.selectedOrderReducer);
+
+  const dispatch = useDispatch();
 
   const reorder = (list, startIndex, endIndex): string[] => {
     const result: string[] = Array.from(list);
@@ -30,19 +40,40 @@ const DndList = ({ selectedNames }:
     setStateNames(items);
   };
 
+  const updateSelectedOrder = (values: string[]): void => {
+    dispatch({
+      type: SELECTED_ORDER_ACTIONS.UPDATE,
+      columns: values,
+    });
+  };
+
+  const manageOrderColumns = (value: string): void => {
+    const selected = selectedOrder.includes(value);
+    const newNames = selected ? selectedOrder.filter((elem: string) =>
+      elem !== value) : [...selectedOrder, value];
+
+    updateSelectedOrder(newNames);
+  };
+
   useEffect(() => {
-    const filter = selectedNames.filter((elem: string) =>
-      !stateNames.includes(elem));
-    setStateNames([...stateNames, ...filter]);
+    const filterState = stateNames.filter((elem: string) =>
+      selectedNames.includes(elem));
+    const filterProp = selectedNames.filter((elem: string) =>
+      !filterState.includes(elem));
+    setStateNames([...filterState, ...filterProp]);
+
+    const filterOrder = selectedOrder.filter((elem: string) =>
+      selectedNames.includes(elem));
+    updateSelectedOrder(filterOrder);
   }, [selectedNames]);
 
   return (
     <CardContainer>
-
+      <h3>How do you want to order them?</h3>
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId='droppable'>
           {provided => (
-            <div
+            <ItemsContainer
               {...provided.droppableProps}
               ref={provided.innerRef}>
               {stateNames.map((item, index) => (
@@ -53,14 +84,20 @@ const DndList = ({ selectedNames }:
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}>
                       <Gap size={2} />
-                      {item}
+                      <ItemContainer even={index % 2 === 0}>
+                        {item}
+                        <>&nbsp;</>
+                        <FontAwesomeIcon icon={faSort}
+                          type='button'
+                          onClick={() => manageOrderColumns(item)} />
+                      </ItemContainer>
                       <Gap size={2} />
                     </div>
                   )}
                 </Draggable>
               ))}
               {provided.placeholder}
-            </div>
+            </ItemsContainer>
           )}
         </Droppable>
       </DragDropContext>

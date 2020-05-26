@@ -12,6 +12,8 @@ const Index = () => {
     state.searchListReducer);
   const { selectedNames } = useSelector((state: GlobalState) =>
     state.selectedListReducer);
+  const { selectedOrder } = useSelector((state: GlobalState) =>
+    state.selectedOrderReducer);
 
   return (
     <Layout helmetTags={<title>List</title>}>
@@ -34,11 +36,13 @@ const Index = () => {
           <Row>
             <Column size={1}>
               <SearchList columnNames={columnNames}
-                selectedNames={selectedNames} />
+                selectedNames={selectedNames} ordered />
+
             </Column>
           </Row>
         </Column>
         <Column size={1}>
+          {selectedOrder && selectedOrder.length}
         </Column>
       </Row>
     </Layout>
