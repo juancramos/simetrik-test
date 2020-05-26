@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { SELECTED_LIST_ACTIONS } from '@store/redux/selectedList/types';
+import { CardContainer } from '@components/card/card.styled';
 
-const SearchList = ({ columnNames }: { columnNames: string[] }) => {
+const SearchList = ({ columnNames, selectedNames }:
+  { columnNames: string[], selectedNames: string[] }) => {
   const [searchInput, setSearchInput] = useState<string>('');
   const [matchCase, setMatchCase] = useState<boolean>(true);
   const [searchNames, setSearchNames] = useState<string[]>([]);
-  const [selectedhNames, setSelectedNames] = useState<string[]>([]);
+
+  const dispatch = useDispatch();
 
   const filterList = (value: string): void => {
     setSearchInput(value);
@@ -16,15 +21,15 @@ const SearchList = ({ columnNames }: { columnNames: string[] }) => {
   };
 
   const manageSelected = (value: string): void => {
-    const selected = selectedhNames.includes(value);
-    const newNames = selected ? selectedhNames.filter((elem: string) =>
-      elem !== value) : [...selectedhNames, value];
-    setSelectedNames(newNames);
+    dispatch({
+      type: SELECTED_LIST_ACTIONS.SELECT,
+      columnName: value,
+    });
   };
 
   const renderList = (cols: string[]): JSX.Element[] =>
     cols.map((colName: string) => {
-      const selected = selectedhNames.includes(colName);
+      const selected = selectedNames.includes(colName);
       return (
         <p key={colName}
           onClick={() => manageSelected(colName)}>
@@ -33,7 +38,7 @@ const SearchList = ({ columnNames }: { columnNames: string[] }) => {
     });
 
   return (
-    <>
+    <CardContainer>
       <div>
         <input placeholder='search...' value={searchInput}
           onChange={({ target: { value } }:
@@ -45,7 +50,7 @@ const SearchList = ({ columnNames }: { columnNames: string[] }) => {
         </p>
       </div>
       {renderList(searchNames.length ? searchNames : columnNames)}
-    </>
+    </CardContainer>
   );
 };
 

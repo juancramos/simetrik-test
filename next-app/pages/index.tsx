@@ -5,10 +5,13 @@ import { Layout } from '@components/layout/Layout';
 import { Row, Column } from '@components/grid';
 import { Gap } from '@components/gap/Gap';
 import SearchList from '@components/searchList/SearchList';
+import DndList from '@components/dndList/DndList';
 
 const Index = () => {
   const { columnNames } = useSelector((state: GlobalState) =>
     state.searchListReducer);
+  const { selectedNames } = useSelector((state: GlobalState) =>
+    state.selectedListReducer);
 
   return (
     <Layout helmetTags={<title>List</title>}>
@@ -17,17 +20,21 @@ const Index = () => {
         <Column size={1}>
         </Column>
         <Column size={2}>
-          <SearchList columnNames={columnNames} />
+          <SearchList columnNames={columnNames}
+            selectedNames={selectedNames} />
         </Column>
         <Column size={2}>
+          {selectedNames.length > 0 &&
+            <Row>
+              <Column size={1}>
+                <DndList selectedNames={selectedNames} />
+                <Gap size={10} />
+              </Column>
+            </Row>}
           <Row>
             <Column size={1}>
-
-            </Column>
-          </Row>
-          <Row>
-            <Column size={1}>
-              <SearchList columnNames={columnNames} />
+              <SearchList columnNames={columnNames}
+                selectedNames={selectedNames} />
             </Column>
           </Row>
         </Column>
