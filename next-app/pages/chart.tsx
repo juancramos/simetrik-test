@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Layout } from '@components/layout/Layout';
 import { Row, Column } from '@components/grid';
 import { Gap } from '@components/gap/Gap';
@@ -8,53 +8,7 @@ import {
   PieChart, Pie,
 } from 'recharts';
 
-const Chart = () => {
-  const [data, setData] = useState<{}>({});
-
-  fetch('data/data.json').then(r => r.json())
-    .then((data) => {
-      const newJson = data && data.map(item => ({
-        creation_date: item.creation_date,
-        status: item.status,
-      }
-      ));
-      const reducer = newJson.reduce((rv, x) => {
-        (rv[x['creation_date']] = rv[x['creation_date']] || []).push(x);
-        return rv;
-      }, {});
-      console.log(reducer);
-    }).catch(e => console.log(e));
-
-  const data0 = [
-    {
-      name: 'Page A', uv: 4000, pv: 2400, amt: 2400,
-    },
-    {
-      name: 'Page B', uv: 3000, pv: 1398, amt: 2210,
-    },
-    {
-      name: 'Page C', uv: 2000, pv: 9800, amt: 2290,
-    },
-    {
-      name: 'Page D', uv: 2780, pv: 3908, amt: 2000,
-    },
-    {
-      name: 'Page E', uv: 1890, pv: 4800, amt: 2181,
-    },
-    {
-      name: 'Page F', uv: 2390, pv: 3800, amt: 2500,
-    },
-    {
-      name: 'Page G', uv: 3490, pv: 4300, amt: 2100,
-    },
-  ];
-
-  const data01 = [
-    { name: 'Group A', value: 400 }, { name: 'Group B', value: 300 },
-    { name: 'Group C', value: 300 }, { name: 'Group D', value: 200 },
-    { name: 'Group E', value: 278 }, { name: 'Group F', value: 189 },
-  ];
-
+function Chart({ lData, pData }) {
   return (
     <Layout helmetTags={<title>Chart</title>}>
       <Gap size={40} />
@@ -67,7 +21,7 @@ const Chart = () => {
             <BarChart
               width={500}
               height={300}
-              data={data0}
+              data={lData}
               margin={{
                 top: 5, right: 30, left: 20, bottom: 5,
               }}
@@ -77,15 +31,16 @@ const Chart = () => {
               <YAxis />
               <Tooltip />
               <Legend />
-              <Bar dataKey='pv' fill='#8884d8' />
-              <Bar dataKey='uv' fill='#82ca9d' />
+              <Bar dataKey='APPROVED' fill='#8884d8' />
+              <Bar dataKey='PENDING' fill='#82ca9d' />
+              <Bar dataKey='REJECTED' fill='#a7ca2d' />
             </BarChart>
           </CardContainer>
           <Gap size={20} />
           <CardContainer>
-            <PieChart width={400} height={400}>
-              <Pie dataKey='value' isAnimationActive={false} data={data01}
-                cx={200} cy={200} outerRadius={80} fill='#8884d8' label />
+            <PieChart width={600} height={600}>
+              <Pie dataKey='total_amount' isAnimationActive={true} data={pData}
+                cx={400} cy={400} outerRadius={80} fill='#8884d8' label />
               <Tooltip />
             </PieChart>
           </CardContainer>
@@ -95,6 +50,41 @@ const Chart = () => {
       </Row>
     </Layout>
   );
+}
+
+Chart.getInitialProps = async ({ req }) => {
+  const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http';
+
+  const apiUrl = `${process.browser
+    ? `${protocol}://${window.location.host}`
+    : `${protocol}://${req.headers.host}`}/data/data.json`;
+
+  const res = await fetch(apiUrl);
+  const data = await res.json();
+
+  const lData = [];
+  const pData = [];
+  data && data.map((item) => {
+    const lIndex = lData.find(x => x.name === item.creation_date);
+    if (lIndex) {
+      if (lIndex[item.status]) {
+        lIndex[item.status] += 1;
+      }
+      else lIndex[item.status] = 1;
+    }
+    else { lData.push({ name: item.creation_date, [item.status]: 1 }); }
+
+    let replace = item.total_amount.replace(/[^\d\,]/g, '');
+    replace = replace.replace(',', '.');
+    console.log(replace);
+    const result = Number(replace);
+    const pIndex = pData.find(x => x.name === item.creation_date);
+    if (pIndex) {
+      pIndex.total_amount += result;
+    }
+    else { pData.push({ name: item.creation_date, total_amount: result }); }
+  });
+  return { lData, pData };
 };
 
 export default Chart;
